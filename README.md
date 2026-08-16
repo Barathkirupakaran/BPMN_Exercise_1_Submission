@@ -1,122 +1,100 @@
-BPMN Exercise 1 – Business Process Modeling
-Overview
+# 🔷 BPMN Exercise 1 – Business Process Modeling
 
-This repository contains the BPMN 2.0 process models developed for Exercise 1. The models demonstrate how business processes can be represented using basic BPMN building blocks such as Start Events, Tasks, Exclusive Gateways, End Events, and Sequence Flows.
+> **BPMN 2.0 Process Modeling using Basic BPMN Building Blocks**
 
-The exercise includes three different business scenarios:
+This repository contains the BPMN 2.0 models created for **Exercise 1**. The objective is to represent real-world business processes using fundamental BPMN elements such as **Start Events, Tasks, Exclusive Gateways, Sequence Flows, and End Events**.
 
-Employee Leave Approval
-Online Purchase Order Processing
-IT Service Request
-Scenario 1: Employee Leave Approval
-Description
+---
 
-This BPMN process represents how an employee's leave request is handled through an HR system.
+## 📌 Scenarios Covered
 
-The process begins when the employee submits a leave request. The HR system checks the employee's available leave balance. An Exclusive Gateway determines whether sufficient leave balance is available.
+| No. | Scenario                            | Description                                                                                    |
+| --- | ----------------------------------- | ---------------------------------------------------------------------------------------------- |
+| 01  | 👨‍💼 Employee Leave Approval       | Process for submitting, reviewing, approving, or rejecting employee leave requests             |
+| 02  | 🛒 Online Purchase Order Processing | Process for checking product availability, processing payment, and completing an online order  |
+| 03  | 🖥️ IT Service Request              | Process for handling IT support requests based on problem severity and resolution requirements |
 
-If the leave balance is insufficient, the system sends an insufficient-balance notification and the process ends.
-If sufficient leave is available, the request is sent to the manager for approval.
-If the manager approves the request, the system updates the employee's leave balance and sends an approval notification.
-If the manager rejects the request, the system sends a rejection notification.
-BPMN Elements Used
-Start Event
-Tasks
-Exclusive Gateways
-End Events
-Sequence Flows
-Process Flow
+---
 
-Start → Submit Leave Request → Check Leave Balance → Balance Available?
+# 01. 👨‍💼 Employee Leave Approval
 
-No → Send Insufficient-Balance Notification → End
+### 📖 Description
 
-Yes → Send Request to Manager → Manager Approves?
+The process begins when an employee submits a leave request. The system checks the employee's available leave balance before forwarding the request to the manager.
 
-Yes → Update Leave Balance → Send Approval Notification → End
+An **Exclusive Gateway** is used to determine whether sufficient leave balance is available. If there is insufficient balance, the employee receives a notification and the process ends.
 
-No → Send Rejection Notification → End
+When sufficient leave is available, the request is sent to the manager for approval. The manager's decision determines whether the leave balance is updated and an approval notification is sent, or a rejection notification is provided.
 
-Scenario 2: Online Purchase Order Processing
-Description
+### 🧩 BPMN Elements Used
 
-This BPMN process represents the processing of an online purchase order.
+* **Start Event** – Begins the leave approval process
+* **Tasks** – Represent leave submission, balance checking, manager processing, balance updating, and notifications
+* **Exclusive Gateways** – Represent leave balance availability and manager approval decisions
+* **Sequence Flows** – Connect the activities and decision paths
+* **End Events** – Represent the completion of each outcome
 
-The process starts when a customer places an order. The system checks the availability of the requested product. An Exclusive Gateway determines whether the product is available.
+---
 
-If the product is unavailable, the customer is notified that the product is out of stock and the process ends.
-If the product is available, the system processes the payment.
-A second Exclusive Gateway checks whether the payment is successful.
-If the payment fails, the customer receives a payment failure notification and the process ends.
-If the payment succeeds, the system confirms the order, prepares the product for shipment, ships the order, and sends a shipping confirmation to the customer.
-BPMN Elements Used
-Start Event
-Tasks
-Exclusive Gateways
-Multiple Process Paths
-End Events
-Sequence Flows
-Process Flow
+# 02. 🛒 Online Purchase Order Processing
 
-Start → Customer Places Order → Check Product Availability → Product Available?
+### 📖 Description
 
-No → Notify Customer: Product Out of Stock → End
+The process begins when a customer places an online order. The system checks whether the requested product is available.
 
-Yes → Process Payment → Payment Successful?
+An **Exclusive Gateway** determines whether the product can be purchased. If the product is unavailable, the customer is notified and the process ends.
 
-No → Notify Customer: Payment Failure → End
+When the product is available, payment is processed. A second **Exclusive Gateway** determines whether the payment is successful. A failed payment results in a notification to the customer, while a successful payment allows the order to proceed through confirmation, product preparation, shipping, and shipping confirmation.
 
-Yes → Confirm Order → Prepare Product for Shipment → Ship Order → Shipping Confirmation → End
+### 🧩 BPMN Elements Used
 
-Scenario 3: IT Service Request
-Description
+* **Start Event** – Begins the order processing
+* **Tasks** – Represent ordering, availability checking, payment, confirmation, preparation, shipping, and notifications
+* **Exclusive Gateways** – Represent product availability and payment success decisions
+* **Sequence Flows** – Connect the different process activities and alternative paths
+* **End Events** – Represent successful completion or unsuccessful outcomes
 
-This BPMN process represents how an employee's IT support request is handled.
+---
 
-The process begins when an employee submits an IT support request. The help desk registers the request and checks the severity of the problem. An Exclusive Gateway determines whether the problem has low or high severity.
+# 03. 🖥️ IT Service Request
 
-A low-severity problem is assigned to a support technician.
-A high-severity problem is assigned to a senior technician.
-Both paths lead to the investigation of the problem.
-After investigation, another Exclusive Gateway determines whether the problem can be resolved internally.
-If it can be resolved internally, the technician fixes the problem.
-If it cannot be resolved internally, the problem is escalated to an external service provider.
-After resolution, the help desk updates the request status and sends a resolution notification to the employee.
-The process then ends.
-BPMN Elements Used
-Start Event
-Multiple Tasks
-Exclusive Gateway
-Alternative Process Paths
-End Event
-Sequence Flows
-Process Flow
+### 📖 Description
 
-Start → Submit IT Support Request → Register Request → Check Problem Severity → Problem Severity?
+The process begins when an employee submits an IT support request. The help desk registers the request and checks the severity of the reported problem.
 
-Low → Assign to Support Technician
+An **Exclusive Gateway** determines whether the problem has low or high severity. Low-severity problems are assigned to a support technician, while high-severity problems are assigned to a senior technician.
 
-High → Assign to Senior Technician
+After investigation, another **Exclusive Gateway** determines whether the problem can be resolved internally. If it can, the technician fixes the problem. Otherwise, the issue is escalated to an external service provider.
 
-Both Paths → Investigate Problem → Can Problem Be Resolved Internally?
+Once the issue is handled, the request status is updated and a resolution notification is sent to the employee.
 
-Yes → Fix Problem
+### 🧩 BPMN Elements Used
 
-No → Escalate to External Service Provider
+* **Start Event** – Begins the IT support process
+* **Tasks** – Represent request submission, registration, assignment, investigation, resolution, escalation, and notification activities
+* **Exclusive Gateways** – Represent severity and internal-resolution decisions
+* **Sequence Flows** – Connect activities and alternative paths
+* **End Event** – Indicates completion of the support request
 
-Both Paths → Update Request Status → Send Resolution Notification → End
+---
 
-BPMN Building Blocks Used
+# 🧱 BPMN Building Blocks
 
-The three scenarios use the following basic BPMN elements:
+| BPMN Element          | Purpose                                                |
+| --------------------- | ------------------------------------------------------ |
+| **Start Event**       | Indicates where the process begins                     |
+| **Task**              | Represents an activity or action                       |
+| **Exclusive Gateway** | Represents a decision where one path is selected       |
+| **Sequence Flow**     | Connects BPMN elements and indicates process direction |
+| **End Event**         | Indicates where a process path ends                    |
 
-BPMN Element	Purpose
-Start Event	Indicates where the process begins
-Task	Represents an activity performed during the process
-Exclusive Gateway	Represents a decision where only one path is selected
-Sequence Flow	Connects BPMN elements and shows the direction of the process
-End Event	Indicates where a process path terminates
-Repository Contents
+> **Note:** Only the BPMN elements required for the scenarios are used. The models focus on basic tasks, events, exclusive decisions, and sequence flows.
+
+---
+
+# 📂 Repository Structure
+
+```text
 BPMN-Exercise-1/
 │
 ├── Scenario-1/
@@ -130,6 +108,19 @@ BPMN-Exercise-1/
 │
 ├── BPMN_Exercise_1.pdf
 └── README.md
-Conclusion
+```
 
-These BPMN models demonstrate the use of fundamental BPMN 2.0 building blocks to represent different real-world business processes. Each model includes process activities, decision points, alternative paths, and appropriate start and end events.
+---
+
+# 🎯 Learning Outcome
+
+This exercise demonstrates how **BPMN 2.0** can be used to model and visualize business processes. The three scenarios show the practical use of **tasks, start and end events, exclusive gateways, and sequence flows** to represent different workflows and decision-based process paths.
+
+---
+
+## 📚 Exercise Details
+
+**Exercise:** BPMN Exercise 1
+**Standard:** BPMN 2.0
+**Focus:** Business Process Modeling
+**Core Elements:** Start Events, Tasks, Exclusive Gateways, Sequence Flows, and End Events
