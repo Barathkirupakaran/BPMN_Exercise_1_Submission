@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di_1="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1" targetNamespace="http://example.com/bpmn" exporter="Camunda Modeler" exporterVersion="5.49.0">
+  <bpmn:process id="Process_1" name="Employee Leave Approval" isExecutable="false">
+    <bpmn:startEvent id="start" name="Start">
+      <bpmn:outgoing>f1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:task id="submit" name="Submit Leave Request">
+      <bpmn:incoming>f1</bpmn:incoming>
+      <bpmn:outgoing>f2</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="check" name="Check Leave Balance">
+      <bpmn:incoming>f2</bpmn:incoming>
+      <bpmn:outgoing>f3</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="g1" name="Balance Available?">
+      <bpmn:incoming>f3</bpmn:incoming>
+      <bpmn:outgoing>f4</bpmn:outgoing>
+      <bpmn:outgoing>f5</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="mgr" name="Send Request to Manager">
+      <bpmn:incoming>f4</bpmn:incoming>
+      <bpmn:outgoing>f7</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="g2" name="Manager Approves?">
+      <bpmn:incoming>f7</bpmn:incoming>
+      <bpmn:outgoing>f8</bpmn:outgoing>
+      <bpmn:outgoing>f9</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="update" name="Update Leave Balance">
+      <bpmn:incoming>f8</bpmn:incoming>
+      <bpmn:outgoing>f10</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="approve" name="Send Approval Notification">
+      <bpmn:incoming>f10</bpmn:incoming>
+      <bpmn:outgoing>f11</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="endA" name="Approved">
+      <bpmn:incoming>f11</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:task id="insuff" name="Send Insufficient-Balance Notification">
+      <bpmn:incoming>f5</bpmn:incoming>
+      <bpmn:outgoing>f6</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="endI" name="Insufficient Balance">
+      <bpmn:incoming>f6</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:task id="reject" name="Send Rejection Notification">
+      <bpmn:incoming>f9</bpmn:incoming>
+      <bpmn:outgoing>f12</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="endR" name="Rejected">
+      <bpmn:incoming>f12</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="f1" name="" sourceRef="start" targetRef="submit" />
+    <bpmn:sequenceFlow id="f2" name="" sourceRef="submit" targetRef="check" />
+    <bpmn:sequenceFlow id="f3" name="" sourceRef="check" targetRef="g1" />
+    <bpmn:sequenceFlow id="f4" name="Yes" sourceRef="g1" targetRef="mgr" />
+    <bpmn:sequenceFlow id="f5" name="No" sourceRef="g1" targetRef="insuff" />
+    <bpmn:sequenceFlow id="f6" name="" sourceRef="insuff" targetRef="endI" />
+    <bpmn:sequenceFlow id="f7" name="" sourceRef="mgr" targetRef="g2" />
+    <bpmn:sequenceFlow id="f8" name="Yes" sourceRef="g2" targetRef="update" />
+    <bpmn:sequenceFlow id="f9" name="No" sourceRef="g2" targetRef="reject" />
+    <bpmn:sequenceFlow id="f10" name="" sourceRef="update" targetRef="approve" />
+    <bpmn:sequenceFlow id="f11" name="" sourceRef="approve" targetRef="endA" />
+    <bpmn:sequenceFlow id="f12" name="" sourceRef="reject" targetRef="endR" />
+  </bpmn:process>
+  <di:BPMNDiagram id="BPMNDiagram_1">
+    <di:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
+      <di:BPMNShape id="start_di" bpmnElement="start">
+        <dc:Bounds x="160" y="180" width="36" height="36" />
+        <di:BPMNLabel>
+          <dc:Bounds x="166" y="216" width="24" height="14" />
+        </di:BPMNLabel>
+      </di:BPMNShape>
+      <di:BPMNShape id="submit_di" bpmnElement="submit">
+        <dc:Bounds x="220" y="170" width="110" height="56" />
+      </di:BPMNShape>
+      <di:BPMNShape id="check_di" bpmnElement="check">
+        <dc:Bounds x="370" y="170" width="110" height="56" />
+      </di:BPMNShape>
+      <di:BPMNShape id="g1_di" bpmnElement="g1" isMarkerVisible="true">
+        <dc:Bounds x="520" y="173" width="50" height="50" />
+        <di:BPMNLabel>
+          <dc:Bounds x="520" y="229" width="51" height="27" />
+        </di:BPMNLabel>
+      </di:BPMNShape>
+      <di:BPMNShape id="mgr_di" bpmnElement="mgr">
+        <dc:Bounds x="615" y="170" width="120" height="56" />
+      </di:BPMNShape>
+      <di:BPMNShape id="g2_di" bpmnElement="g2" isMarkerVisible="true">
+        <dc:Bounds x="760" y="173" width="50" height="50" />
+        <di:BPMNLabel>
+          <dc:Bounds x="759" y="228" width="53" height="27" />
+        </di:BPMNLabel>
+      </di:BPMNShape>
+      <di:BPMNShape id="update_di" bpmnElement="update">
+        <dc:Bounds x="840" y="170" width="120" height="56" />
+      </di:BPMNShape>
+      <di:BPMNShape id="approve_di" bpmnElement="approve">
+        <dc:Bounds x="1000" y="170" width="140" height="56" />
+      </di:BPMNShape>
+      <di:BPMNShape id="endA_di" bpmnElement="endA">
+        <dc:Bounds x="1170" y="180" width="36" height="36" />
+        <di:BPMNLabel>
+          <dc:Bounds x="1165" y="219" width="48" height="14" />
+        </di:BPMNLabel>
+      </di:BPMNShape>
+      <di:BPMNShape id="insuff_di" bpmnElement="insuff">
+        <dc:Bounds x="600" y="60" width="150" height="56" />
+      </di:BPMNShape>
+      <di:BPMNShape id="endI_di" bpmnElement="endI">
+        <dc:Bounds x="790" y="70" width="36" height="36" />
+        <di:BPMNLabel>
+          <dc:Bounds x="768" y="36" width="79" height="27" />
+        </di:BPMNLabel>
+      </di:BPMNShape>
+      <di:BPMNShape id="reject_di" bpmnElement="reject">
+        <dc:Bounds x="870" y="60" width="140" height="56" />
+      </di:BPMNShape>
+      <di:BPMNShape id="endR_di" bpmnElement="endR">
+        <dc:Bounds x="1062" y="70" width="36" height="36" />
+        <di:BPMNLabel>
+          <dc:Bounds x="1059" y="110" width="44" height="14" />
+        </di:BPMNLabel>
+      </di:BPMNShape>
+      <di:BPMNEdge id="f1_di" bpmnElement="f1">
+        <di_1:waypoint x="196" y="198" />
+        <di_1:waypoint x="220" y="198" />
+      </di:BPMNEdge>
+      <di:BPMNEdge id="f2_di" bpmnElement="f2">
+        <di_1:waypoint x="330" y="198" />
+        <di_1:waypoint x="370" y="198" />
+      </di:BPMNEdge>
+      <di:BPMNEdge id="f3_di" bpmnElement="f3">
+        <di_1:waypoint x="480" y="198" />
+        <di_1:waypoint x="520" y="198" />
+      </di:BPMNEdge>
+      <di:BPMNEdge id="f4_di" bpmnElement="f4">
+        <di_1:waypoint x="570" y="198" />
+        <di_1:waypoint x="615" y="198" />
+        <di:BPMNLabel>
+          <dc:Bounds x="584" y="173" width="18" height="14" />
+        </di:BPMNLabel>
+      </di:BPMNEdge>
+      <di:BPMNEdge id="f5_di" bpmnElement="f5">
+        <di_1:waypoint x="545" y="173" />
+        <di_1:waypoint x="545" y="88" />
+        <di_1:waypoint x="600" y="88" />
+        <di:BPMNLabel>
+          <dc:Bounds x="569" y="69" width="15" height="14" />
+        </di:BPMNLabel>
+      </di:BPMNEdge>
+      <di:BPMNEdge id="f6_di" bpmnElement="f6">
+        <di_1:waypoint x="750" y="88" />
+        <di_1:waypoint x="790" y="88" />
+      </di:BPMNEdge>
+      <di:BPMNEdge id="f7_di" bpmnElement="f7">
+        <di_1:waypoint x="735" y="198" />
+        <di_1:waypoint x="760" y="198" />
+      </di:BPMNEdge>
+      <di:BPMNEdge id="f8_di" bpmnElement="f8">
+        <di_1:waypoint x="810" y="198" />
+        <di_1:waypoint x="840" y="198" />
+        <di:BPMNLabel>
+          <dc:Bounds x="817" y="173" width="18" height="14" />
+        </di:BPMNLabel>
+      </di:BPMNEdge>
+      <di:BPMNEdge id="f9_di" bpmnElement="f9">
+        <di_1:waypoint x="788" y="176" />
+        <di_1:waypoint x="840" y="88" />
+        <di_1:waypoint x="870" y="88" />
+        <di:BPMNLabel>
+          <dc:Bounds x="849" y="68" width="15" height="14" />
+        </di:BPMNLabel>
+      </di:BPMNEdge>
+      <di:BPMNEdge id="f10_di" bpmnElement="f10">
+        <di_1:waypoint x="960" y="198" />
+        <di_1:waypoint x="1000" y="198" />
+      </di:BPMNEdge>
+      <di:BPMNEdge id="f11_di" bpmnElement="f11">
+        <di_1:waypoint x="1140" y="198" />
+        <di_1:waypoint x="1170" y="198" />
+      </di:BPMNEdge>
+      <di:BPMNEdge id="f12_di" bpmnElement="f12">
+        <di_1:waypoint x="1010" y="88" />
+        <di_1:waypoint x="1062" y="88" />
+      </di:BPMNEdge>
+    </di:BPMNPlane>
+  </di:BPMNDiagram>
+</bpmn:definitions>
